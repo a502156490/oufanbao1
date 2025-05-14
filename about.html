@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N26金融推广</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      
+      font-family: "PingFang SC", sans-serif;
+      background: #f5f9ff;
+      padding: 20px 15px;
+      max-width: 600px;
+      margin: 0 auto;
+      padding-bottom: 80px; /* 为底部导航留出空间 */
+    }
+    
+    /* 卡片组件 */
+    .card-component {
+      margin-bottom: 25px;
+    }
+    .card {
+      width: 100%;
+      height: 240px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(108, 185, 248, 0.2);
+      position: relative;
+      margin-bottom: 15px;
+    }
+    .header {
+      height: 80px;
+      background: url('https://2.ss.508sys.com/image/materialLib/pageTemplate/6000446.png?v=201712181730') center/cover;
+      position: relative;
+      padding: 15px;
+    }
+    .header::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 300 20" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 C60,15 120,5 180,10 C240,15 300,0 300,0 L300,20 L0,20 Z" fill="white"/></svg>');
+      background-size: cover;
+    }
+    .back-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      z-index: 2;
+      backdrop-filter: blur(5px);
+    }
+    .bank-name {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+      z-index: 2;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .bank-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 0px solid white;
+    }
+    .tags {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 15px 10px 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .tags::-webkit-scrollbar {
+      display: none;
+    }
+    .tag {
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .tag-orange {
+      background: rgba(255, 138, 0, 0.2);
+      color: #ff8a00;
+      border: 1px solid rgba(255, 138, 0, 0.3);
+    }
+    .tag-blue {
+      background: rgba(0, 180, 255, 0.1);
+      color: #3a9ef6;
+      border: 1px solid rgba(0, 180, 255, 0.2);
+    }
+    .rewards {
+      display: flex;
+      padding: 0 20px;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .reward-card {
+      flex: 1;
+      text-align: center;
+      padding: 15px;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    .reward-card-orange {
+      border: 1px solid #ff8a00;
+    }
+    .reward-card-blue {
+      border: 1px solid #6cb9f8;
+    }
+    .reward-amount {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+    .reward-amount-orange {
+      color: #ff8a00;
+    }
+    .reward-amount-blue {
+      color: #3a9ef6;
+    }
+    .reward-label {
+      font-size: 13px;
+      color: #666;
+    }
+    
+    /* 公告栏组件 */
+    .announce-component {
+      margin-bottom: 25px;
+    }
+    .announce-box {
+      width: 100%;
+      height: 60px;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .logo-area {
+      width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #eee;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .logo-area a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      text-decoration: none;
+    }
+    .logo-area a img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+    .notice-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      padding: 5px 10px;
+    }
+    .notice-list {
+      position: absolute;
+      width: 100%;
+    }
+    .notice-item a {
+      display: block;
+      color: #333;
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 25px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-left: 10px;
+    }
+    .notice-item a::before {
+      content: "·";
+      color: #FF5F15;
+      margin-right: 5px;
+    }
+    
+    /* 折叠面板组件 */
+    .accordion-component {
+      margin-bottom: 20px;
+    }
+    .section {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    .title {
+      font-weight: 600;
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 15px;
+      color: #1890ff;
+    }
+    .title span {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+    .content {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .content.active {
+      padding: 15px 20px;
+      max-height: 1000px;
+      border-top: 1px solid #f0f0f0;
+    }
+    ul {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    strong {
+      color: #ff4d4f;
+      font-weight: 600;
+    }
+    .invite-container {
+      background: linear-gradient(135deg, #f6ffed 0%, #e6f7ff 100%);
+      border: 1px solid #bae7ff;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .invite-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      color: #1890ff;
+      font-weight: 600;
+    }
+    .invite-header span {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+    .invite-code-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px dashed #1890ff;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    .invite-code {
+      flex: 1;
+      font-family: monospace;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1890ff;
+      letter-spacing: 1px;
+    }
+    .copy-hint {
+      color: #666;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .step {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 15px;
+    }
+    .step:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 3px;
+      width: 18px;
+      height: 18px;
+      background-color: #1890ff;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .step-1:before { content: "1"; }
+    .step-2:before { content: "2"; }
+    .step-3:before { content: "3"; }
+    .warning {
+      background-color: #fffbe6;
+      border-left: 4px solid #faad14;
+      padding: 12px;
+      margin: 15px 0;
+      font-size: 14px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      margin: 10px auto;
+    }
+    
+    /* 底部导航栏样式 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 600px;
+      height: 60px;
+      display: flex;
+      background: white;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    .nav-left {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: white;
+      border: 2px solid #1890FF;
+      border-radius: 12px;
+      margin: 10px;
+      color: #1890FF;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .nav-left:hover {
+      background: #f0f7ff;
+    }
+
+    .nav-right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #1890FF;
+      border-radius: 12px;
+      margin: 10px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .nav-right:hover {
+      background: #1478d6;
+    }
+
+    /* 电脑端适配 */
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 20px;
+      }
+      .bottom-nav {
+        position: relative;
+        margin: 20px auto;
+        bottom: auto;
+        left: auto;
+        transform: none;
+      }
+   
+  </style>
+</head>
+<body>
+ 
+  <div id="google_translate_element"></div>
+
+
+  <script type="text/javascript">
+    <a href="https://translate.google.com/translate?sl=auto&tl=en&u=https://a502156490.neocities.org/N26%E8%AF%A6%E6%83%85%E9%A1%B5%E6%95%B4%E5%A5%971" target="_blank">英文版</a>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <!-- 卡片组件 -->
+  <div class="card-component">
+    <div class="card">
+      <div class="header">
+        <div class="back-button" onclick="history.back()">←</div>
+        <div class="bank-name">
+          <img src="https://images.ctfassets.net/q33z48p65a6w/42Hvr3OYJgxAEdzoB2quix/b2e949a4f350afb04b3e6447cffd3b20/N26_Newsroom___N26_Logo_Thumbnail.png" class="bank-logo" alt="N26 Logo">
+          <span class="notranslate">N26</span>
+        </div>
+      </div>
+      <div class="tags">
+        <div class="tag tag-orange">高返佣</div>
+        <div class="tag tag-blue">零门槛</div>
+        <div class="tag tag-orange">秒到账</div>
+        <div class="tag tag-blue">多币种</div>
+      </div>
+      <div class="rewards">
+        <div class="reward-card reward-card-orange">
+          <div class="reward-amount reward-amount-orange">20.00€</div>
+          <div class="reward-label">邀请奖励</div>
+        </div>
+        <div class="reward-card reward-card-blue">
+          <div class="reward-amount reward-amount-blue">15.00€</div>
+          <div class="reward-label">受邀奖励</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 公告栏组件 -->
+  <div class="announce-component">
+    <div class="announce-box">
+      <div class="logo-area">
+        <a href="https://example.com">
+          <img src="https://i.postimg.cc/qqFtLbWK/icons8-100.png" alt="Logo">
+        </a>
+      </div>
+      <div class="notice-area">
+        <div class="notice-list" id="noticeList">
+          <div class="notice-item">
+            <a href="https://example.com/link1" target="_blank">在家实现！日入500€套利玩法</a>
+          </div>
+          <div class="notice-item">
+            <a href="https://example.com/link2" target="_blank">WIFI贴推广，多劳多得，无上限</a>
+          </div>
+          <div class="notice-item">
+            <a href="https://example.com/link3" target="_blank">注册返现，简单操作高佣金</a>
+          </div>
+          <div class="notice-item">
+            <a href="https://example.com/link4" target="_blank">游戏盒子项目，海外爆火</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 折叠面板组件 -->
+  <div class="accordion-component">
+    <div class="section">
+      <div class="title" onclick="toggleContent('c1')"><span>🏦</span>N26欧盟银行介绍</div>
+      <div class="content" id="c1">
+        <ul>
+          <li>开户免费，无月费，线上5分钟完成注册+身份认证</li>
+          <li>自带德国IBAN或西班牙IBAN</li>
+          <li>可绑定Google Pay/Apple Pay</li>
+          <li>虚拟卡+实体卡，可全球邮寄</li>
+          <li>APP内可直接管理账户、转账、收付款</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title" onclick="toggleContent('c2')"><span>🎁</span>如何领取奖励？我能领多少？</div>
+      <div class="content" id="c2">
+        <div class="warning">
+          🔥 <strong>重要提示：</strong> 必须通过邀请码链接注册才能获得奖励！直接官网注册无奖励。
+        </div>
+        
+        <div class="step step-1">
+          用邀请码注册链接，实名注册账户，审核一般几分钟搞定
+        </div>
+        
+        <div class="step step-2">
+          完成注册后，充值<strong>20欧元</strong>，然后把它全部花掉，花完20欧元（超市刷卡/PayPal充值/游戏充值都行）
+        </div>
+        
+        <div class="step step-3">
+          消费完成，系统48小时内发放<strong>15-50欧元现金奖励</strong>（一般是15€起步）
+        </div>
+
+        <div class="step step-4">
+          点击右下角，<strong>立即领取</strong>就可以进入拉新链接，填写稍微填写点资料就可以了
+        </div>
+
+        <div class="invite-container">
+          <div class="invite-header">
+            <span>📌</span> 我的专属邀请码
+          </div>
+          <div class="invite-code-box">
+            <div class="invite-code" id="inviteCode">wenlongw9432</div>
+          </div>
+          <div class="copy-hint">(长按上方邀请码复制)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title" onclick="toggleContent('c3')"><span>🌍</span>可用的国家</div>
+      <div class="content" id="c3">
+        <ul>
+          <li>欧洲区国家、持欧盟身份用户均可注册</li>
+          <li>热门支持国家：德国、西班牙、法国、意大利、葡萄牙、荷兰、比利时、爱尔兰、奥地利等</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title" onclick="toggleContent('c4')"><span>💶</span>是否是免费的</div>
+      <div class="content" id="c4">
+        <ul>
+          <li>N26基础账户永久免费开通，无月费</li>
+          <li>使用Visa/MasterCard虚拟卡/实体卡，充值提现合理手续费，日常管理完全免费</li>
+          <li>除非开通高端账户/定制卡套餐，否则无任何强制费用</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title" onclick="toggleContent('c5')"><span>🔐</span>是否安全</div>
+      <div class="content" id="c5">
+        <ul>
+          <li>N26是德国FSA监管持牌银行，受欧盟金融保护体系监管</li>
+          <li>账户资金安全，APP内多重身份验证</li>
+          <li>银行级别风控，等同于德国本土银行安全标准</li>
+          <li>可自行在谷歌搜索，或者【Play 商店】查看，都是几百万下载量，正规的大型银行，不存在消息泄露这类问题。</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="title" onclick="toggleContent('c7')"><span>📝</span>注册需要用到哪些材料？</div>
+      <div class="content" id="c7">
+        <ul>
+          <li>护照或者欧洲合法身份，如居留卡</li>
+          <li>地址证明，一般是住家证明就可以，银行账单、水电单也可以</li>
+          <li>证明单子上的地址需和你填写的地址保持一致</li>
+          <li>如果有二个手机那最好了，如果语言不太好，可以用谷歌相机翻译功能，对着手机拍翻译</li>
+          <li>注册建议使用谷歌浏览器，可自动翻译页面</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title" onclick="toggleContent('c6')"><span>💸</span>套利玩法</div>
+      <div class="content" id="c6">
+        <ul>
+          <li>风控级别稳定，适合做套利主力账户</li>
+          <li>具体日入500€套利玩法、跨国搬砖细节请咨询客服</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="title" onclick="toggleContent('c8')"><span>✅</span>如何知道是否成功使用的邀请码？</div>
+      <div class="content" id="c8">
+        <ul>
+          <li>在输入注册密码时，若下方出现绿色框，显示 "你的代码已经成功运用"，则代表邀请码已成功使用。</li>
+        </ul>
+        <img src="https://i.postimg.cc/bNLh6rwq/20250508030009.png" alt="成功使用邀请码示例">
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部导航栏 -->
+  <div class="bottom-nav">
+    <a href="https://a502156490.neocities.org/%E6%B7%BB%E5%8A%A0%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F" class="nav-left" target="_blank">添加客服</a>
+    <a href="https://你的立即领取链接.com" class="nav-right" target="_blank">立即领取</a>
+  </div>
+
+  <script>
+    // 卡片公告滚动
+    const noticeList = document.getElementById('noticeList');
+    const items = document.querySelectorAll('.notice-item');
+    let currentIndex = 0;
+    const itemHeight = 25;
+    
+    for (let i = 0; i < 2; i++) {
+      const clone = items[i].cloneNode(true);
+      noticeList.appendChild(clone);
+    }
+    
+    function scrollNotice() {
+      currentIndex++;
+      if (currentIndex > items.length) {
+        currentIndex = 0;
+        noticeList.style.transition = 'none';
+        noticeList.style.transform = 'translateY(0)';
+        setTimeout(() => {
+          noticeList.style.transition = 'transform 0.5s ease';
+        }, 50);
+        return;
+      }
+      noticeList.style.transition = 'transform 0.5s ease';
+      noticeList.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+    }
+    
+    setInterval(scrollNotice, 3000);
+
+    // 折叠面板切换
+    function toggleContent(id) {
+      var content = document.getElementById(id);
+      content.classList.toggle('active');
+    }
+
+    // 邀请码复制提示
+    const inviteCode = document.getElementById('inviteCode');
+    inviteCode.addEventListener('touchstart', function() {
+      const range = document.createRange();
+      range.selectNodeContents(this);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    });
+  </script>
+
+</body>
+</html>

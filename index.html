@@ -1,72 +1,968 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- 
-      This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
-    -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧Fan宝 - 欧洲华人拉新平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <style>
+     /* 基础重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+}
 
-    <!--
-      This is the page head - it contains info the browser uses
-      Like the title, which appears on the browser tab but not inside the page
-      Further down you'll see the content that displays in the page
-    -->
-    <title>Hello World!</title>
+/* 修复后的顶部导航栏 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: all 0.3s ease;
+    max-width: 500px;
+    margin: 0 auto;
+}
 
-    <!-- The website stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
+.logo-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row; /* 确保横向排列 */
+}
 
-    <!-- The website JavaScript file -->
-    <script src="/script.js" defer></script>
-  </head>
-  <body>
-    <!--
-      The body includes the content you see in the page
-      Each element is defined using tags, like this <div></div>
-      The attributes like class="wrapper" let us style elements in the CSS
-    -->
-    <div class="wrapper">
-      <div class="content" role="main">
-        <h1 class="title">Hello World!</h1>
-        <img
-          src="https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2Fillustration.svg?v=1618177344016"
-          class="illustration"
-          alt="Editor illustration"
-          title="Click the image!"
-        />
-        <div class="instructions">
-          <h2>Using this project</h2>
-          <p>
-            This is the Glitch <strong>Hello Website</strong> project. You can
-            use it to build your own site. Check out the code in the editor and open
-            the <span class="fileopener" data-file="TODO.md" data-line="0"
-              >TODO</span> for next steps!
-          </p>
-          <!--  🚧 TODO: ADD BUTTON HERE -->
+.modern-logo {
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
 
-          <!-- Once you've added the button from TODO.md, click it in the page -->
-          <!-- Check out the function in script.js to see how it works -->
+.ou {
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    margin-right: 5px;
+}
+
+.fan {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.platform-title {
+    color: white;
+    font-size: 14px;
+    margin-left: 10px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    white-space: nowrap;
+}
+
+/* 修复语言下拉菜单 */
+.language-switcher {
+    position: relative;
+}
+
+.language-btn {
+    background: rgba(255,255,255,0.3);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.language-btn .flag-icon {
+    margin-right: 5px;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
+}
+
+.language-dropdown {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 150px;
+    display: none;
+    z-index: 101;
+}
+
+.language-dropdown.show {
+    display: block;
+}
+
+.language-option {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+}
+
+.language-option:hover {
+    background: #f5f5f5;
+}
+
+/* 修复后的轮播图 */
+.slider-container {
+    width: 100%;
+    position: relative;
+    margin-top: 0;
+}
+
+.slider {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slides {
+    display: flex;
+    width: 400%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    width: 25.00%;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    z-index: 10;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* 滚动后的导航样式 */
+.header.scrolled {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header.scrolled .ou {
+    color: #1890ff;
+    text-shadow: none;
+}
+
+.header.scrolled .fan,
+.header.scrolled .platform-title {
+    color: #333;
+    text-shadow: none;
+}
+
+.header.scrolled .language-btn {
+    background: rgba(255,255,255,0.7);
+    color: #333;
+}
+        /* 功能按钮区 */
+        .features {
+            padding: 15px;
+            background-color: #fff;
+            margin: 0 0 15px 0;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-row {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+        
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* 第一排5个小圆按钮 */
+        .small-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* 下面两排大圆角矩形按钮 */
+        .large-rect {
+            width: 48%;
+            height: 90px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 15px;
+            margin: 8px 0;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: left;
+            text-decoration: none;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .large-rect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .large-rect .title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .large-rect .desc {
+            font-size: 12px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.4;
+            text-decoration: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        /* 公告栏 */
+        .announce-box {
+            width: 100%;
+            height: 60px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin: 15px 0;
+        }
+        
+        .logo-area {
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #eee;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+        }
+        
+        .logo-area a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            text-decoration: none;
+        }
+        
+        .logo-area a img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+        
+        .notice-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            padding: 5px 10px;
+        }
+        
+        .notice-list {
+            position: absolute;
+            width: 100%;
+        }
+        
+        .notice-item a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            font-size: 13px;
+            line-height: 25px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 10px;
+        }
+        
+        .notice-item a::before {
+            content: "·";
+            color: #FF5F15;
+            margin-right: 5px;
+        }
+
+        /* 热门项目区 */
+        .hot-projects {
+            padding: 15px;
+            background-color: #fff;
+            margin: 15px 0;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            color: #f5511e;
+            margin-right: 8px;
+        }
+
+        .project-card-link {
+            display: block;
+            width: 100%;
+            height: 133px;
+            text-decoration: none;
+            margin-bottom: 16px;
+        }
+
+        .project-card {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .project-logo-space {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 36px;
+            height: 34px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .project-logo-space img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-title {
+            margin-left: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            height: 34px;
+            line-height: 34px;
+        }
+
+        .project-top-right-amount {
+            position: absolute;
+            top: 15px;
+            right: 12px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #f5511e;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 3px;
+            margin-top: 8px;
+            margin-left: 50px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .project-tag {
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 11px;
+            padding: 0 5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 58px;
+        }
+
+        .project-tag-1 {
+            background: rgba(255, 114, 20, 0.19);
+            color: #fe5722;
+        }
+
+        .project-tag-2 {
+            background: rgba(50, 133, 255, 0.22);
+            color: #3285ff;
+        }
+
+        .project-divider {
+            height: 1px;
+            background: #eee;
+            margin: 8px 0;
+        }
+
+        .project-reward-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .project-reward-text { color: #999; }
+        .project-reward-amount { color: #ff0000; font-weight: bold; }
+        .project-claimed-text { color: #f5511e; }
+        
+            /* 底部导航 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+        
+        .bottom-nav a {
+            flex: 1;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .bottom-nav a img {
+            display: block;
+            margin: 0 auto 4px;
+            width: 24px;
+            height: 24px;
+        }
+        
+        .bottom-nav a.active {
+            color: #007aff;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 10px;
+            }
+            
+            .content-box {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+                padding: 10px;
+            }
+            
+            h2 {
+                font-size: 1.1rem;
+            }
+            
+            .cta {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="modern-logo">
+                <span class="ou">欧</span>
+                <span class="fan">Oufanbao</span>
+            <div class="platform-title" translate="no">欧洲华人拉新平台</div>
         </div>
-      </div>
+        </div>
+        
+        <div class="language-switcher">
+            <button class="language-btn">
+                <span class="flag-icon flag-icon-cn"></span>
+                <i class="fas fa-chevron-down" style="margin-left: 5px; font-size: 12px;"></i>
+            </button>
+            <div class="language-dropdown" id="languageDropdown">
+                <a href="?lang=zh" class="language-option">
+                    <span class="flag-icon flag-icon-cn"></span>
+                    中文
+                </a>
+                <a href="?lang=en" class="language-option">
+                    <span class="flag-icon flag-icon-gb"></span>
+                    English
+                </a>
+                <a href="?lang=fr" class="language-option">
+                    <span class="flag-icon flag-icon-fr"></span>
+                    Français
+                </a>
+                <a href="?lang=de" class="language-option">
+                    <span class="flag-icon flag-icon-de"></span>
+                    Deutsch
+                </a>
+                <a href="?lang=es" class="language-option">
+                    <span class="flag-icon flag-icon-es"></span>
+                    Español
+                </a>
+                <a href="?lang=it" class="language-option">
+                    <span class="flag-icon flag-icon-it"></span>
+                    Italiano
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 轮播图 -->
+    <div class="slider">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <a href="https://a502156490.neocities.org/%E5%8A%A0%E7%9B%9F%E4%BB%A3%E7%90%86%E5%95%86%E8%AF%A6%E6%83%85">
+                    <img src="https://i.postimg.cc/W14Lj7N0/Azul-y-Blanco-3-D-Plan-de-Proyecto-Presentaci-n-de-Negocios-500-x-201-2.jpg" alt="活动1">
+                </a>
+            </div>
+            <div class="slide">
+                <a href="https://a502156490.neocities.org/%E6%97%A5%E5%85%A5500%E5%A5%97%E5%88%A9%E6%96%B9%E6%B3%95">
+                    <img src="https://i.postimg.cc/FRr0n1gF/Orange-Black-and-White-Modern-Legal-Services-Pitch-Deck-Presentation.jpg" alt="活动2">
+                </a>
+            </div>
+            <div class="slide">
+                <a href="https://a502156490.neocities.org/wifi%E8%B4%B4%E9%A1%B9%E7%9B%AE">
+                    <img src="https://i.postimg.cc/0QV7gxcY/Black-Minimalist-Modern-AI-Robot-Presentation.jpg" alt="活动3">
+                </a>
+            </div>
+              <div class="slide">
+                <a href="#">
+                    <img src="https://i.postimg.cc/43bz5pcF/Blue-Red-Illustration-Console-Game-Night-Quiz-Game-Presentation.jpg" alt="活动4">
+                </a>
+            </div>
+        </div>
+        <div class="slider-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
     </div>
-    <!-- The footer holds our remix button — you can keep or delete it ✂ -->
-    <footer class="footer">
-      <div class="links"></div>
-      <a
-        class="btn--remix"
-        target="_top"
-        href="https://glitch.com/edit/#!/remix/glitch-hello-website"
-      >
-        <img
-          src="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2FLogo_Color.svg?v=1618199565140"
-          alt=""
-        />
-        Remix on Glitch
-      </a>
-    </footer>
-  </body>
+    
+    <!-- 功能按钮区 -->
+    <div class="features">
+         <!-- 第一排5个小圆按钮 -->
+        <div class="feature-row">
+            <a href="YOUR_LINK_1" class="feature-item">
+                <div class="small-circle" style="background-image: url(https://rtboss.bd.cn/up/rich_text/55/20250506174115HPTQcKiMEb.png)"></div>
+                <div class="feature-name" translate="no">推荐</div>
+            </a>
+            <a href="YOUR_LINK_2" class="feature-item">
+                <div class="small-circle" style="background-image: url(https://rtboss.bd.cn/up/rich_text/55/20250506173454OXTqTV5oZ8.png)"></div>
+                <div class="feature-name" translate="no">高佣</div>
+            </a>
+            <a href="YOUR_LINK_3" class="feature-item">
+                <div class="small-circle" style="background-image: url(https://rtboss.bd.cn/up/rich_text/55/202505061742097oXJaNKsI1.png)"></div>
+                <div class="feature-name" translate="no">银行</div>
+            </a>
+            <a href="YOUR_LINK_4" class="feature-item">
+                <div class="small-circle" style="background-image: url(https://rtboss.bd.cn/up/rich_text/55/20250506174327aPmjBXQM4k.png)"></div>
+               <div class="feature-name" translate="no">游戏</div>
+            </a>
+            <a href="YOUR_LINK_5" class="feature-item">
+                <div class="small-circle" style="background-image: url(https://rtboss.bd.cn/up/rich_text/55/20250506173853rJrxb92ZS4.png)"></div>
+                <div class="feature-name" translate="no">全部</div>
+            </a>
+        </div>
+        
+        <!-- 第二排2个大圆角矩形按钮 -->
+        <div class="feature-row" style="justify-content: space-between;">
+            <a href="https://a502156490.neocities.org/%E6%97%A5%E5%85%A5500%E5%A5%97%E5%88%A9%E6%96%B9%E6%B3%95" class="large-rect" style="background-image: url(https://i.postimg.cc/kXBB4WgP/底色蓝.jpg)">
+                <div class="title">套利必备</div>
+                <div class="desc">日入500€，不求人！</div>
+            </a>
+            <a href="https://www.oufanbao.me/blank-4" class="large-rect" style="background-image: url(https://i.postimg.cc/yYtWSWDg/beige-orange-autumn-Facebook-post.jpg)">
+                <div class="title">注册返现</div>
+                <div class="desc">简单丨高佣金</div>
+            </a>
+        </div>
+        
+        <!-- 第三排2个大圆角矩形按钮 -->
+        <div class="feature-row" style="justify-content: space-between;">
+            <a href="https://a502156490.neocities.org/wifi%E8%B4%B4%E9%A1%B9%E7%9B%AE" class="large-rect" style="background-image: url(https://i.postimg.cc/yYtWSWDg/beige-orange-autumn-Facebook-post.jpg)">
+                <div class="title">Wifi贴项目</div>
+                <div class="desc">一单10€，无上限！</div>
+            </a>
+            <a href="YOUR_LINK_9" class="large-rect" style="background-image: url(https://i.postimg.cc/kXBB4WgP/image.jpg)">
+                <div class="title">游戏盒子</div>
+                <div class="desc">海外爆火虚拟项目</div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- 公告栏 -->
+    <div class="announce-box">
+        <div class="logo-area">
+            <a href="#">
+                <img src="https://i.postimg.cc/mZKwPHnH/icons8-100.png" alt="Logo">
+            </a>
+        </div>
+        <div class="notice-area">
+            <div class="notice-list" id="noticeList">
+                <div class="notice-item">
+                    <a href="YOUR_NOTICE_LINK_1" target="_blank">在家实现！日入500€套利玩法</a>
+                </div>
+                <div class="notice-item">
+                    <a href="YOUR_NOTICE_LINK_2" target="_blank">WIFI贴推广，多劳多得，无上限</a>
+                </div>
+                <div class="notice-item">
+                    <a href="YOUR_NOTICE_LINK_3" target="_blank">注册返现，简单操作高佣金</a>
+                </div>
+                <div class="notice-item">
+                    <a href="YOUR_NOTICE_LINK_4" target="_blank">游戏盒子项目，海外爆火</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 热门项目区 -->
+    <div class="hot-projects">
+        <div class="section-title">
+            <i class="fas fa-fire"></i>热门项目
+        </div>
+        
+        <!-- 项目卡片1 - N26 -->
+<a href="YOUR_PROJECT_LINK_1" class="project-card-link" target="_blank">
+    <div class="project-card">
+        <div class="project-logo-space">
+            <img src="https://i.postimg.cc/q7CBMW6n/N26.png" alt="N26">
+        </div>
+        <div class="project-top-right-amount">15.00€</div>
+        <div class="project-title">N26</div>
+        <div class="project-tags">
+            <div class="project-tag project-tag-1">高返佣</div>
+            <div class="project-tag project-tag-2">开户金</div>
+            <div class="project-tag project-tag-1">套利必备</div>
+            <div class="project-tag project-tag-2">欧盟银行</div>
+        </div>
+        <div class="project-divider"></div>
+        <div class="project-reward-line">
+            <span class="project-reward-text">已发放奖励：<span class="project-reward-amount">9,875.00€</span></span>
+            <span class="project-claimed-text">658人已经领取</span>
+        </div>
+    </div>
+</a>
+
+<!-- 项目卡片2 - Revolut -->
+<a href="YOUR_PROJECT_LINK_2" class="project-card-link" target="_blank">
+    <div class="project-card">
+        <div class="project-logo-space">
+            <img src="https://i.postimg.cc/nL6z4nf0/revolut.png" alt="Revolut">
+        </div>
+        <div class="project-top-right-amount">10~200€</div>
+        <div class="project-title">Revolut</div>
+        <div class="project-tags">
+            <div class="project-tag project-tag-1">新用户</div>
+            <div class="project-tag project-tag-2">套利必备</div>
+            <div class="project-tag project-tag-1">高佣金</div>
+            <div class="project-tag project-tag-2">欧盟银行</div>
+        </div>
+        <div class="project-divider"></div>
+        <div class="project-reward-line">
+            <span class="project-reward-text">已发放奖励：<span class="project-reward-amount">6,365.00€</span></span>
+            <span class="project-claimed-text">637人已经领取</span>
+        </div>
+    </div>
+</a>
+
+<!-- 项目卡片3 - Wise -->
+<a href="YOUR_PROJECT_LINK_3" class="project-card-link" target="_blank">
+    <div class="project-card">
+        <div class="project-logo-space">
+            <img src="https://i.postimg.cc/4NBx86TK/wise.png" alt="Wise">
+        </div>
+        <div class="project-top-right-amount">20~50€</div>
+        <div class="project-title">Wise</div>
+        <div class="project-tags">
+            <div class="project-tag project-tag-2">新用户</div>
+            <div class="project-tag project-tag-1">首单奖励</div>
+            <div class="project-tag project-tag-2">套利必备</div>
+            <div class="project-tag project-tag-2">欧盟银行</div>
+        </div>
+        <div class="project-divider"></div>
+        <div class="project-reward-line">
+            <span class="project-reward-text">已发放奖励：<span class="project-reward-amount">32,500.00€</span></span>
+            <span class="project-claimed-text">1,625人已经领取</span>
+        </div>
+    </div>
+</a>
+
+<!-- 项目卡片4 - Paysend -->
+<a href="YOUR_PROJECT_LINK_4" class="project-card-link" target="_blank">
+    <div class="project-card">
+        <div class="project-logo-space">
+            <img src="https://i.postimg.cc/0ykJj59S/image.jpg" alt="Paysend">
+        </div>
+        <div class="project-top-right-amount">10.00€</div>
+        <div class="project-title">Paysend</div>
+        <div class="project-tags">
+            <div class="project-tag project-tag-1">高返佣</div>
+            <div class="project-tag project-tag-2">新用户</div>
+            <div class="project-tag project-tag-1">套利必备</div>
+            <div class="project-tag project-tag-2">欧盟银行</div>
+        </div>
+        <div class="project-divider"></div>
+        <div class="project-reward-line">
+            <span class="project-reward-text">已发放奖励：<span class="project-reward-amount">5,300.00€</span></span>
+            <span class="project-claimed-text">530人已经领取</span>
+        </div>
+    </div>
+</a>
+
+<!-- 项目卡片5 - Vivid -->
+<a href="YOUR_PROJECT_LINK_5" class="project-card-link" target="_blank">
+    <div class="project-card">
+        <div class="project-logo-space">
+            <img src="https://i.postimg.cc/XNrLN8sW/1.jpg" alt="Vivid">
+        </div>
+        <div class="project-top-right-amount">20.00€</div>
+        <div class="project-title">Vivid</div>
+        <div class="project-tags">
+            <div class="project-tag project-tag-1">高返佣</div>
+            <div class="project-tag project-tag-2">新用户</div>
+            <div class="project-tag project-tag-1">套利必备</div>
+            <div class="project-tag project-tag-2">欧盟银行</div>
+        </div>
+        <div class="project-divider"></div>
+        <div class="project-reward-line">
+            <span class="project-reward-text">已发放奖励：<span class="project-reward-amount">2,260.00€</span></span>
+            <span class="project-claimed-text">113人已经领取</span>
+        </div>
+    </div>
+</a>
+
+<!-- 项目卡片6 - Arfiex -->
+<a href="YOUR_PROJECT_LINK_6" class="project-card-link" target="_blank">
+    <div class="project-card">
+        <div class="project-logo-space">
+            <img src="https://i.postimg.cc/Dwx4XVzM/Afriex.jpg" alt="Arfiex">
+        </div>
+        <div class="project-top-right-amount">15.00€</div>
+        <div class="project-title">Arfiex</div>
+        <div class="project-tags">
+            <div class="project-tag project-tag-1">高返佣</div>
+            <div class="project-tag project-tag-2">新用户</div>
+            <div class="project-tag project-tag-1">开户奖励</div>
+            <div class="project-tag project-tag-2">欧盟银行</div>
+        </div>
+        <div class="project-divider"></div>
+        <div class="project-reward-line">
+            <span class="project-reward-text">已发放奖励：<span class="project-reward-amount">4,830.00€</span></span>
+            <span class="project-claimed-text">322人已经领取</span>
+        </div>
+    </div>
+</a>
+
+<!-- 项目卡片7 - Arfiex -->
+<a href="YOUR_PROJECT_LINK_6" class="你他妈的链接" target="_blank">
+    <div class="project-card">
+        <div class="project-logo-space">
+            <img src="你他妈logo的链接" alt="Arfiex">
+        </div>
+        <div class="project-top-right-amount">15.00€</div>
+        <div class="project-title">Arfiex</div>
+        <div class="project-tags">
+            <div class="project-tag project-tag-1">高返佣</div>
+            <div class="project-tag project-tag-2">新用户</div>
+            <div class="project-tag project-tag-1">开户奖励</div>
+            <div class="project-tag project-tag-2">欧盟银行</div>
+        </div>
+        <div class="project-divider"></div>
+        <div class="project-reward-line">
+            <span class="project-reward-text">已发放奖励：<span class="project-reward-amount">4,830.00€</span></span>
+            <span class="project-claimed-text">322人已经领取</span>
+        </div>
+    </div>
+</a>
+ 
+     <!-- 底部导航 -->
+    <div class="bottom-nav">
+        <a href="https://www.oufanbao.me">
+            <img src="//22375158.s21i.faiusr.com/4/ABUIABAEGAAgobeIwQYoxpOt7QMwsAk4sAk.png" alt="首页">
+            首页
+        </a>
+        <a href="https://a502156490.neocities.org/%E6%B7%BB%E5%8A%A0%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F">
+            <img src="//22375158.s21i.faiusr.com/4/ABUIABAEGAAg17iIwQYo_qnnywUwsAk4sAk.png" alt="🏠 项目">
+            添加客服
+        </a>
+        <a href="https://a502156490.neocities.org/%E5%8A%A0%E7%9B%9F%E4%BB%A3%E7%90%86%E5%95%86%E8%AF%A6%E6%83%85">
+            <img src="//22375158.s21i.faiusr.com/4/ABUIABAEGAAgp8aIwQYozNmUzQYwsAk4sAk.png" alt="🏠 加盟">
+            加盟
+        </a>
+        <a href="profile.html">
+            <img src="//22375158.s21i.faiusr.com/4/ABUIABAEGAAg5MWIwQYoiOmG8wcwsAk4sAk.png" alt="👤我的">
+            我的
+        </a>
+    </div>
+    
+    <script>
+// 导航栏滚动效果
+document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('.header');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // 轮播图功能
+    let currentSlide = 0;
+    const slides = document.querySelector('.slides');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = document.querySelectorAll('.slide').length;
+    
+    function showSlide(index) {
+        currentSlide = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
+        updateDots();
+    }
+    
+    function updateDots() {
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+    
+    // 自动轮播
+    let slideInterval = setInterval(() => {
+        showSlide(currentSlide + 1);
+    }, 3000);
+    
+    // 点击指示器切换
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            showSlide(index);
+            slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 3000);
+        });
+    });
+    
+    // 语言切换菜单
+    const langBtn = document.querySelector('.language-btn');
+    const langDropdown = document.querySelector('.language-dropdown');
+    
+    langBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+    });
+    
+    document.addEventListener('click', function() {
+        langDropdown.classList.remove('show');
+    });
+    
+    langDropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+});
+        // 公告栏滚动效果
+        const noticeList = document.getElementById('noticeList');
+        const items = document.querySelectorAll('.notice-item');
+        let currentIndex = 0;
+        const itemHeight = 25;
+        
+        for (let i = 0; i < 2; i++) {
+            const clone = items[i].cloneNode(true);
+            noticeList.appendChild(clone);
+        }
+        
+        function scrollNotice() {
+            currentIndex++;
+            if (currentIndex > items.length) {
+                currentIndex = 0;
+                noticeList.style.transition = 'none';
+                noticeList.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    noticeList.style.transition = 'transform 0.5s ease';
+                }, 50);
+                return;
+            }
+            noticeList.style.transition = 'transform 0.5s ease';
+            noticeList.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+        }
+        
+        setInterval(scrollNotice, 3000);
+    </script>
+</body>
 </html>
